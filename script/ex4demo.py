@@ -67,12 +67,12 @@ class Ex4DemoScript(rcp.script.Script):
                             self.sequence()
                     except ScriptStopException:
                         self.write('Script sequence stopped.')
-                elif command[1][1] == 'r':
+                elif command[1][0] == 'r':
                     self.write('posing right arm')
-                    self.send_pose_r(command[1][2:])
-                elif command[1][1] == 'l':
-                    self.left('posing left arm')
-                    self.send_pose_l(command[2][2:])
+                    self.pose_r(command[1][2:])
+                elif command[1][0] == 'l':
+                    self.write('posing left arm')
+                    self.pose_l(command[1][2:])
                 else:
                     self.send_pose(command[1])
 
@@ -84,11 +84,11 @@ class Ex4DemoScript(rcp.script.Script):
     def send_pose(self, name):
         self.send_cue('pose',name)
 
-    def send_pose_r(self, name):
-        self.send_cue('pose0',name)
-
-    def send_pose_l(self, name):
+    def pose_r(self, name):
         self.send_cue('pose1',name)
+
+    def pose_l(self, name):
+        self.send_cue('pose0',name)
         
     def send_reset_cue(self):
         self.write("Sending reset cue.")
@@ -105,33 +105,146 @@ class Ex4DemoScript(rcp.script.Script):
         self.write("Script starting.")
         self.send_cue('gains', 0.5, 1.0)        
         self.send_pose('pose2')
+        self.sleep_unless_stop(2)
+
+        self.pose_l('pose4')
+        self.sleep_unless_stop(1.5)
+        self.pose_l('pose5')
+        self.sleep_unless_stop(2)
+        self.pose_l('pose3')
+        self.sleep_unless_stop(1.1)
+        self.pose_l('pose5')
+        self.sleep_unless_stop(3)
+
+        self.pose_r('reset')
+        self.sleep_unless_stop(0.3)
+        self.pose_l('pose6')
         self.sleep_unless_stop(1)
 
-        self.send_pose('pose1')
+        self.pose_r('pose4')
+        self.sleep_unless_stop(0.3)
+        self.pose_l('pose7')
         self.sleep_unless_stop(1)
 
-        self.send_pose('pose2')
+        self.pose_r('pose5')
+        self.sleep_unless_stop(0.3)
+        self.pose_l('pose6')
         self.sleep_unless_stop(1)
+
+        self.pose_r('pose4')
+        self.sleep_unless_stop(2)
+
+        self.pose_l('pose1')
+        self.sleep_unless_stop(1)
+
+        self.pose_l('pose2')
+        self.sleep_unless_stop(1)
+
+        self.pose_l('pose3')
+        self.sleep_unless_stop(1)
+
+        self.pose_l('pose4')
+        self.sleep_unless_stop(2)
+
+        self.pose_r('pose3')
+        self.sleep_unless_stop(2)
+
+        self.pose_r('pose4')
+        self.sleep_unless_stop(3)
+
+        ###################
+
+        self.pose_l('reset')
+        self.sleep_unless_stop(1.5)
+
+        self.pose_l('pose2')
+        self.sleep_unless_stop(1.5)
+
+        self.pose_l('pose3')
+        self.sleep_unless_stop(0.5)
+        self.pose_l('pose4')
+        self.sleep_unless_stop(1.5)
+
+        self.pose_l('pose3')
+        self.sleep_unless_stop(0.5)
+        self.pose_l('pose4')
+        self.sleep_unless_stop(3)
 
         self.send_pose('pose3')
+        self.sleep_unless_stop(1.5)
+        self.send_pose('pose5')
         self.sleep_unless_stop(1)
+
+        self.pose_l('pose4')
+        self.sleep_unless_stop(0.5)
+        self.pose_r('pose4')
+        self.sleep_unless_stop(2)
+
+        self.pose_r('pose2')
+        self.sleep_unless_stop(2)
+
+        self.pose_l('pose2')
+        self.sleep_unless_stop(2)
+
+        self.pose_r('pose6')
+        self.sleep_unless_stop(1.5)
+
+        self.pose_l('pose4')
+        self.sleep_unless_stop(0.4)
+        self.pose_r('pose7')
+        self.sleep_unless_stop(1)
+
+        self.pose_l('pose4')
+        self.sleep_unless_stop(0.4)
+        self.pose_r('pose7')
+        self.sleep_unless_stop(1)
+
+        self.pose_l('pose3')
+        self.sleep_unless_stop(0.4)
+        self.pose_r('pose6')
+        self.sleep_unless_stop(0.8)
+
+        self.pose_l('pose4')
+        self.sleep_unless_stop(0.4)
+        self.pose_r('pose7')
+        self.sleep_unless_stop(0.4)
+
+        self.pose_l('pose3')
+        self.sleep_unless_stop(0.4)
+        self.pose_r('pose6')
+        self.sleep_unless_stop(2)
+
+        self.pose_l('pose5')
+        self.sleep_unless_stop(4)
+
+        self.pose_l('pose4')
+        self.sleep_unless_stop(.8)
+        self.pose_l('pose5')
+        self.sleep_unless_stop(4)
+
+        self.pose_r('pose2')
+        self.sleep_unless_stop(1)
+        self.pose_r('pose3')
+        self.sleep_unless_stop(2)
+
+        self.pose_l('pose3')
+        self.sleep_unless_stop(2)
 
         self.send_pose('pose4')
         self.sleep_unless_stop(1)
-
+        self.send_pose('pose3')
+        self.sleep_unless_stop(1)
         self.send_pose('pose5')
         self.sleep_unless_stop(1)
-        
-        self.send_pose('pose6')
-        self.sleep_unless_stop(1)
+        self.send_pose('pose3')
+        self.sleep_unless_stop(6)
 
-        self.send_pose('pose7')
-        self.sleep_unless_stop(1)
+        self.send_pose('pose2')
 
-        self.send_pose('pose8')
-        self.sleep_unless_stop(1)
-
+        ###################
         self.write("Script done.")
+
+        self.sleep_unless_stop(10)
         return
 
 ################################################################
