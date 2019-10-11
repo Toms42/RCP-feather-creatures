@@ -67,6 +67,12 @@ class Ex4DemoScript(rcp.script.Script):
                             self.sequence()
                     except ScriptStopException:
                         self.write('Script sequence stopped.')
+                elif command[1][1] == 'r':
+                    self.write('posing right arm')
+                    self.send_pose_r(command[1][2:])
+                elif command[1][1] == 'l':
+                    self.left('posing left arm')
+                    self.send_pose_l(command[2][2:])
                 else:
                     self.send_pose(command[1])
 
@@ -77,6 +83,12 @@ class Ex4DemoScript(rcp.script.Script):
 
     def send_pose(self, name):
         self.send_cue('pose',name)
+
+    def send_pose_r(self, name):
+        self.send_cue('pose0',name)
+
+    def send_pose_l(self, name):
+        self.send_cue('pose1',name)
         
     def send_reset_cue(self):
         self.write("Sending reset cue.")
@@ -92,7 +104,7 @@ class Ex4DemoScript(rcp.script.Script):
         
         self.write("Script starting.")
         self.send_cue('gains', 0.5, 1.0)        
-        self.send_pose('reset')
+        self.send_pose('pose2')
         self.sleep_unless_stop(1)
 
         self.send_pose('pose1')
